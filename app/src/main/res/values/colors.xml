@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Brand colors -->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Others -->
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#707070</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
