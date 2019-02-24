@@ -20,6 +20,11 @@ import java.util.List;
 
 public class UserRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    // Interfaces
+    public interface OnItemClickListener {
+        void onItemClick(User user);
+    }
+
     // Constants
     private final int BODY_VIEW = 0;
     private final int EMPTY_VIEW = 2;
@@ -27,6 +32,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     // Attributes
     private Context context;
     private List<User> fullUsers;
+    private OnItemClickListener onItemClickListener;
     private List<User> users;
     private ValueFilter valueFilter;
 
@@ -35,6 +41,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.context = context;
         this.users = users;
         this.fullUsers = users;
+        this.onItemClickListener = (OnItemClickListener) context;
     }
 
     @NonNull
@@ -105,6 +112,12 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(bodyView);
             ivAvatar = bodyView.findViewById(R.id.iv_avatar);
             tvFullName = bodyView.findViewById(R.id.tv_full_name);
+            bodyView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(users.get(getAdapterPosition()));
+                }
+            });
         }
     }
 

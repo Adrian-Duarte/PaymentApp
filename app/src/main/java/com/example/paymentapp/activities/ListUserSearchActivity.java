@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListUserSearchActivity extends BaseSearchActivity {
+public class ListUserSearchActivity extends BaseSearchActivity  implements UserRecyclerViewAdapter.OnItemClickListener {
 
     // Constants
     private static final int PER_PAGE = 12;
@@ -41,6 +41,12 @@ public class ListUserSearchActivity extends BaseSearchActivity {
     }
 
     @Override
+    public boolean addBackButton() {
+        return false;
+    }
+
+
+    @Override
     public int getContentView() {
         return R.layout.activity_list_user;
     }
@@ -53,6 +59,11 @@ public class ListUserSearchActivity extends BaseSearchActivity {
     @Override
     public void onQueryTextResult(String query) {
         recyclerViewAdapter.getFilter().filter(query);
+    }
+
+    @Override
+    public void onItemClick(User user) {
+        startActivity(AmountActivity.getStartIntent(this, user));
     }
 
     // Private methods

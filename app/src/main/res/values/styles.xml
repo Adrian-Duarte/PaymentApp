@@ -6,9 +6,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
     </style>
 
     <!-- FONTS -->
+
+    <!-- Larger -->
+    <style name="LargerFont">
+        <item name="android:textSize">@dimen/font_larger</item>
+    </style>
+
+    <style name="LargerFont.Black">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+    </style>
+
+    <style name="LargerFont.Black.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- Large -->
     <style name="LargeFont">
@@ -36,12 +51,20 @@
         <item name="android:textColor">@color/colorGray</item>
     </style>
 
-    <style name="NormalFont.White">
-        <item name="android:textColor">@color/colorWhite</item>
-    </style>
-
     <style name="NormalFont.Gray.Bold">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NormalFont.Primary">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="NormalFont.Primary.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NormalFont.White">
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>
