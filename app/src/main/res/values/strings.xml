@@ -3,4 +3,7 @@
 
     <!-- General -->
     <string name="all_search">Buscar</string>
+
+    <!-- Empty -->
+    <string name="empty_generic_elements">No se encontraron elementos</string>
 </resources>
