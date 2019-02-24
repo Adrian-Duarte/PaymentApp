@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:layout_height="50dp"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_small"
+    >
+
+    <ImageView
+        android:id="@+id/iv_secure_thumbnail"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        tools:src="@tools:sample/avatars"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_width="match_parent"
+        tools:text="@tools:sample/lorem"
+        style="@style/NormalFont.Gray"
+        />
+
+</LinearLayout>

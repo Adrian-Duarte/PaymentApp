@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,6 +83,10 @@ public class AmountActivity extends BaseActivity {
     }
 
     // Listeners
+    public void onClickContinueButton(View view) {
+        startActivity(PaymentMethodActivity.getStartIntent(this));
+    }
+
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

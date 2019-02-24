@@ -99,7 +99,7 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
     }
 
     private void initialize() {
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        apiInterface = APIClient.getMockClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
         rvUsers = findViewById(R.id.rv_users);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));

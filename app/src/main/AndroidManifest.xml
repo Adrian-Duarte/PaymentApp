@@ -25,6 +25,9 @@
             android:name=".activities.AmountActivity"
             android:windowSoftInputMode="adjustResize|stateVisible"
             />
+        <activity
+            android:name=".activities.PaymentMethodActivity"
+            />
     </application>
 
 </manifest>
