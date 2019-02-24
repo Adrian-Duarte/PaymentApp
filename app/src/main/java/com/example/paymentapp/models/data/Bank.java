@@ -2,7 +2,7 @@ package com.example.paymentapp.models.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PaymentMethod {
+public class Bank {
 
     // Attributes
     @SerializedName("id")

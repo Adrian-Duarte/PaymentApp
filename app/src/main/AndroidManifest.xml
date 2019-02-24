@@ -26,6 +26,9 @@
             android:windowSoftInputMode="adjustResize|stateVisible"
             />
         <activity
+            android:name=".activities.BankActivity"
+            />
+        <activity
             android:name=".activities.PaymentMethodActivity"
             />
     </application>
