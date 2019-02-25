@@ -1,8 +1,8 @@
 package com.example.paymentapp.api;
 
 import com.example.paymentapp.models.Installment;
-import com.example.paymentapp.models.data.Bank;
-import com.example.paymentapp.models.data.PaymentMethod;
+import com.example.paymentapp.models.Bank;
+import com.example.paymentapp.models.PaymentMethod;
 import com.example.paymentapp.models.data.UserData;
 
 import java.util.List;

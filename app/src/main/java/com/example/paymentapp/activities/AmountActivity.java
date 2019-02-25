@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.paymentapp.R;
 import com.example.paymentapp.models.User;
-import com.example.paymentapp.models.data.Payment;
+import com.example.paymentapp.models.Payment;
 import com.example.paymentapp.utils.CurrencyUtils;
 import com.example.paymentapp.utils.GlideUtils;
 import com.example.paymentapp.utils.TinyDB;

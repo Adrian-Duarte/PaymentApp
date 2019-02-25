@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.paymentapp.R;
-import com.example.paymentapp.models.data.Bank;
+import com.example.paymentapp.models.Bank;
 import com.example.paymentapp.utils.GlideUtils;
 
 import java.util.List;

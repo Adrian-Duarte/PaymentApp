@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.example.paymentapp.models.data.Payment;
+import com.example.paymentapp.models.Payment;
 import com.google.gson.Gson;
 
 import android.content.Context;

@@ -15,7 +15,7 @@ import com.example.paymentapp.api.APIClient;
 import com.example.paymentapp.api.APIInterface;
 import com.example.paymentapp.models.Installment;
 import com.example.paymentapp.models.PayerCost;
-import com.example.paymentapp.models.data.Payment;
+import com.example.paymentapp.models.Payment;
 import com.example.paymentapp.utils.CustomProgressBar;
 import com.example.paymentapp.utils.TinyDB;
 

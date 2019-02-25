@@ -1,8 +1,8 @@
-package com.example.paymentapp.models.data;
+package com.example.paymentapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Bank {
+public class PaymentMethod {
 
     // Attributes
     @SerializedName("id")

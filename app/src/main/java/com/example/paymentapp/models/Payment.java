@@ -1,7 +1,4 @@
-package com.example.paymentapp.models.data;
-
-import com.example.paymentapp.models.PayerCost;
-import com.example.paymentapp.models.User;
+package com.example.paymentapp.models;
 
 public class Payment {
 

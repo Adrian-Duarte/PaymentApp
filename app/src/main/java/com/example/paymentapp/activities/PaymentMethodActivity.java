@@ -13,8 +13,8 @@ import com.example.paymentapp.R;
 import com.example.paymentapp.adapters.PaymentMethodRecyclerViewAdapter;
 import com.example.paymentapp.api.APIClient;
 import com.example.paymentapp.api.APIInterface;
-import com.example.paymentapp.models.data.Payment;
-import com.example.paymentapp.models.data.PaymentMethod;
+import com.example.paymentapp.models.Payment;
+import com.example.paymentapp.models.PaymentMethod;
 import com.example.paymentapp.utils.CustomProgressBar;
 import com.example.paymentapp.utils.TinyDB;
 
