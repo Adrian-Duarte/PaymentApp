@@ -57,6 +57,11 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
     }
 
     @Override
+    public int getToolbarTitle() {
+        return R.string.all_installments;
+    }
+
+    @Override
     public void onItemClick(PayerCost payerCost) {
         // Update payment
         TinyDB tinyDB = new TinyDB(this);

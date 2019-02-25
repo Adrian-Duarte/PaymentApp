@@ -53,10 +53,14 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
         return false;
     }
 
-
     @Override
     public int getContentView() {
         return R.layout.activity_list_user;
+    }
+
+    @Override
+    public int getToolbarTitle() {
+        return R.string.all_users;
     }
 
     @Override

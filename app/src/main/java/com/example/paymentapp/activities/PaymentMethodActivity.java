@@ -55,6 +55,11 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     }
 
     @Override
+    public int getToolbarTitle() {
+        return R.string.all_payment_method;
+    }
+
+    @Override
     public void onItemClick(PaymentMethod paymentMethod) {
         // Update payment
         TinyDB tinyDB = new TinyDB(this);

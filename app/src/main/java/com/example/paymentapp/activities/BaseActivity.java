@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.paymentapp.R;
 
@@ -13,6 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract boolean addBackButton();
     public abstract int getContentView();
+    public abstract int getToolbarTitle();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,6 +24,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentView());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Set title
+        ((TextView)toolbar.findViewById(R.id.tv_toolbar_title)).setText(getString(getToolbarTitle()));
 
         // Show back button
         ActionBar actionBar = getSupportActionBar();

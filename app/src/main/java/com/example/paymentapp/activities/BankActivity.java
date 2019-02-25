@@ -62,6 +62,11 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
     }
 
     @Override
+    public int getToolbarTitle() {
+        return R.string.all_bank;
+    }
+
+    @Override
     public void onItemClick(Bank bank) {
         // Update payment
         TinyDB tinyDB = new TinyDB(this);

@@ -44,6 +44,11 @@ public class PaymentResultActivity extends BaseActivity {
         return R.layout.activity_payment_result;
     }
 
+    @Override
+    public int getToolbarTitle() {
+        return R.string.all_result;
+    }
+
     // Private methods
     private void initialize() {
         tinyDB = new TinyDB(this);

@@ -46,6 +46,11 @@ public class AmountActivity extends BaseActivity {
         return R.layout.activity_amount;
     }
 
+    @Override
+    public int getToolbarTitle() {
+        return R.string.all_amount;
+    }
+
     // Private methods
     private void initialize() {
         user = new TinyDB(this).getPayment().getUser();
