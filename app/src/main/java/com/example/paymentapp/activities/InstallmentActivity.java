@@ -38,6 +38,7 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
     private Payment payment;
     private RecyclerView rvInstallments;
 
+    // Override methods and callbacks
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,11 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
         // Update payment
         TinyDB tinyDB = new TinyDB(this);
         Payment payment = tinyDB.getPayment();
-        payment.setRecommendedMessage(payerCost.getRecommendedMessage());
+        payment.setPayerCost(payerCost);
         tinyDB.putPayment(payment);
+
+        // Start payment result activity
+        startActivity(PaymentResultActivity.getStartIntent(this));
     }
 
     // Private methods
@@ -72,8 +76,8 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
             (
                 APIClient.PUBLIC_KEY,
                 payment.getAmount(),
-                payment.getId(),
-                payment.getIssuerId()
+                payment.getPaymentMethod().getId(),
+                payment.getBank().getId()
             )
         ;
         call.enqueue(new Callback<List<Installment>>() {

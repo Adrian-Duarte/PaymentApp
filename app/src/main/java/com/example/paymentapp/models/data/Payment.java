@@ -1,37 +1,47 @@
 package com.example.paymentapp.models.data;
 
+import com.example.paymentapp.models.PayerCost;
+import com.example.paymentapp.models.User;
+
 public class Payment {
 
     // Attributes
-    private String id;
     private String amount;
-    private String recommendedMessage;
-    private String issuerId;
+    private Bank bank;
+    private PayerCost payerCost;
+    private PaymentMethod paymentMethod;
+    private User user;
 
     // Getters && Setters
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getAmount() {
         return amount;
-    }
-    public void setRecommendedMessage(String recommendedMessage) {
-        this.recommendedMessage = recommendedMessage;
-    }
-    public String getRecommendedMessage() {
-        return recommendedMessage;
     }
     public void setAmount(String amount) {
         this.amount = amount;
     }
-    public String getIssuerId() {
-        return issuerId;
+    public Bank getBank() {
+        return bank;
     }
-    public void setIssuerId(String issuerId) {
-        this.issuerId = issuerId;
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+    public PayerCost getPayerCost() {
+        return payerCost;
+    }
+    public void setPayerCost(PayerCost payerCost) {
+        this.payerCost = payerCost;
+    }
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

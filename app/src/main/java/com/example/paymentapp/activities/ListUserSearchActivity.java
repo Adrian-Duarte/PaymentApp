@@ -1,5 +1,7 @@
 package com.example.paymentapp.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,8 +13,10 @@ import com.example.paymentapp.adapters.UserRecyclerViewAdapter;
 import com.example.paymentapp.api.APIClient;
 import com.example.paymentapp.api.APIInterface;
 import com.example.paymentapp.models.User;
+import com.example.paymentapp.models.data.Payment;
 import com.example.paymentapp.models.data.UserData;
 import com.example.paymentapp.utils.CustomProgressBar;
+import com.example.paymentapp.utils.TinyDB;
 
 import java.util.List;
 
@@ -21,6 +25,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListUserSearchActivity extends BaseSearchActivity  implements UserRecyclerViewAdapter.OnItemClickListener {
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, ListUserSearchActivity.class);
+    }
 
     // Constants
     private static final int PER_PAGE = 12;
@@ -63,7 +71,13 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
 
     @Override
     public void onItemClick(User user) {
-        startActivity(AmountActivity.getStartIntent(this, user));
+        // Update payment
+        TinyDB tinyDB = new TinyDB(this);
+        Payment payment = tinyDB.getPayment();
+        payment.setUser(user);
+        tinyDB.putPayment(payment);
+
+        startActivity(AmountActivity.getStartIntent(this));
     }
 
     // Private methods

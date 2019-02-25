@@ -36,6 +36,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     private List<PaymentMethod> paymentMethods;
     private RecyclerView rvPaymentMethods;
 
+    // Override methods and callbacks
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
         // Update payment
         TinyDB tinyDB = new TinyDB(this);
         Payment payment = tinyDB.getPayment();
-        payment.setId(paymentMethod.getId());
+        payment.setPaymentMethod(paymentMethod);
         tinyDB.putPayment(payment);
 
         // Start bank activity

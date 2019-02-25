@@ -20,37 +20,20 @@ import com.example.paymentapp.utils.TinyDB;
 
 public class AmountActivity extends BaseActivity {
 
-    public static Intent getStartIntent(Context context, User user) {
-        Intent intent =  new Intent(context, AmountActivity.class);
-        intent.putExtra(EXTRA_USER, user);
-        return intent;
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, AmountActivity.class);
     }
-
-    // Constants
-    public static final String EXTRA_USER = "extra_user";
 
     // Attributes
     private EditText etAmount;
     private User user;
 
+    // Override methods and callbacks
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getExtras();
         initialize();
         setListeners();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Update payment
-        String amount = etAmount.getText().toString();
-        String onlyNumber = amount.replaceAll("[^0-9]", "");
-        Payment payment = new Payment();
-        payment.setAmount(onlyNumber);
-        new TinyDB(this).putPayment(payment);
     }
 
     @Override
@@ -64,13 +47,8 @@ public class AmountActivity extends BaseActivity {
     }
 
     // Private methods
-    private void getExtras() {
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null)
-            user = extras.getParcelable(EXTRA_USER);
-    }
-
     private void initialize() {
+        user = new TinyDB(this).getPayment().getUser();
         etAmount = findViewById(R.id.et_amount);
         etAmount.requestFocus();
         etAmount.setHint(CurrencyUtils.formatCurrency(0));
@@ -84,6 +62,15 @@ public class AmountActivity extends BaseActivity {
 
     // Listeners
     public void onClickContinueButton(View view) {
+        // Update payment
+        TinyDB tinyDB = new TinyDB(this);
+        String amount = etAmount.getText().toString();
+        String onlyNumber = amount.replaceAll("[^0-9]", "");
+        Payment payment = tinyDB.getPayment();
+        payment.setAmount(onlyNumber);
+        new TinyDB(this).putPayment(payment);
+
+        // Start payment method activity
         startActivity(PaymentMethodActivity.getStartIntent(this));
     }
 
