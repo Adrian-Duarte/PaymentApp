@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorGray"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -10,81 +11,102 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <LinearLayout
-        android:gravity="center"
+    <android.support.v7.widget.CardView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_large"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/spacing_normal"
         >
 
-        <TextView
+        <LinearLayout
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/all_to"
-            style="@style/NormalFont.Primary.Bold"
-            />
-
-        <android.support.v7.widget.CardView
-            android:innerRadius="0dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_width="30dp"
-            android:shape="ring"
-            android:thicknessRatio="1.9"
-            app:cardCornerRadius="15dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_normal"
             >
 
-            <ImageView
-                android:id="@+id/iv_avatar"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                tools:src="@tools:sample/avatars"
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/all_to"
+                style="@style/NormalFont.Primary"
                 />
 
-        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:innerRadius="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_width="30dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardCornerRadius="15dp"
+                >
 
-        <TextView
-            android:id="@+id/tv_full_name"
-            android:gravity="center_vertical"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_width="match_parent"
-            tools:text="@tools:sample/lorem"
-            style="@style/NormalFont.Gray"
-            />
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    tools:src="@tools:sample/avatars"
+                    />
 
-    </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_full_name"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_width="match_parent"
+                tools:text="@tools:sample/lorem"
+                style="@style/NormalFont.Gray.Bold"
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
 
     <RelativeLayout
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         >
 
-        <EditText
-            android:id="@+id/et_amount"
-            android:background="@android:color/transparent"
-            android:cursorVisible="false"
-            android:inputType="number"
-            android:layout_centerInParent="true"
+        <RelativeLayout
+            android:layout_above="@id/btn_continue"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+
+            <EditText
+                android:id="@+id/et_amount"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:inputType="number"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/spacing_normal"
+                style="@style/ExtraLargerFont.Primary.Bold"
+                tools:text="$0"
+                />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:enabled="false"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_tiny"
-            android:layout_width="wrap_content"
-            android:padding="@dimen/spacing_normal"
-            style="@style/LargerFont.Black.Bold"
-            tools:text="$0"
+            android:layout_width="match_parent"
+            android:onClick="onClickContinueButton"
+            android:text="@string/all_continue"
+            style="@style/Widget.AppCompat.Button.Colored"
             />
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_continue"
-        android:enabled="false"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:onClick="onClickContinueButton"
-        android:text="@string/all_continue"
-        />
 
 </LinearLayout>

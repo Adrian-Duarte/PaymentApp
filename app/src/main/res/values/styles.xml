@@ -11,6 +11,20 @@
 
     <!-- FONTS -->
 
+    <!-- Extra larger -->
+    <style name="ExtraLargerFont">
+        <item name="android:textSize">@dimen/font_extra_larger</item>
+    </style>
+
+    <style name="ExtraLargerFont.Primary">
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="ExtraLargerFont.Primary.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Larger -->
     <style name="LargerFont">
         <item name="android:textSize">@dimen/font_larger</item>
@@ -60,7 +74,7 @@
     </style>
 
     <style name="NormalFont.Gray">
-        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textColor">@color/colorGrayDark</item>
     </style>
 
     <style name="NormalFont.Gray.Bold">

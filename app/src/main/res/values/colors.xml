@@ -7,6 +7,7 @@
 
     <!-- Others -->
     <color name="colorBlack">#000000</color>
-    <color name="colorGray">#707070</color>
+    <color name="colorGray">#C0C0C0</color>
+    <color name="colorGrayDark">#707070</color>
     <color name="colorWhite">#FFFFFF</color>
 </resources>
