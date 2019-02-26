@@ -19,6 +19,7 @@ import com.example.paymentapp.models.Payment;
 import com.example.paymentapp.utils.CustomProgressBar;
 import com.example.paymentapp.utils.TinyDB;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,7 +35,7 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
     // Attributes
     private APIInterface apiInterface;
     private CustomProgressBar customProgressBar;
-    private List<PayerCost> payerCosts;
+    private List<PayerCost> payerCosts = new ArrayList<>();
     private Payment payment;
     private RecyclerView rvInstallments;
 
@@ -100,10 +101,13 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
                     showGenericError();
                     return;
                 }
-                payerCosts = installments.get(0).getPayerCosts();
-                if(payerCosts==null) {
-                    showGenericError();
-                    return;
+                try {
+                    payerCosts = installments.get(0).getPayerCosts();
+                    if(payerCosts==null) {
+                        showGenericError();
+                        return;
+                    }
+                } catch (Exception ignored) {
                 }
 
                 // Success
