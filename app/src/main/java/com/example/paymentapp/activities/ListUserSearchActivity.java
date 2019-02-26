@@ -94,15 +94,18 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
                 customProgressBar.hide();
 
                 // Check if data is correct
-                if(!response.isSuccessful()) {
+                if(response.isSuccessful()) {
+                    showGenericError();
                     return;
                 }
                 UserData userData = response.body();
-                if(userData ==null) {
+                if(userData==null) {
+                    showGenericError();
                     return;
                 }
                 users = userData.getUsers();
                 if(users ==null) {
+                    showGenericError();
                     return;
                 }
                 // Success
@@ -112,6 +115,7 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
             public void onFailure(Call<UserData> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                showGenericError();
             }
         });
     }

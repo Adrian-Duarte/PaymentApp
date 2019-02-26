@@ -89,10 +89,12 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
+                    showGenericError();
                     return;
                 }
                 banks = response.body();
-                if(banks ==null) {
+                if(banks==null) {
+                    showGenericError();
                     return;
                 }
 
@@ -103,6 +105,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
             public void onFailure(Call<List<Bank>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                showGenericError();
             }
         });
     }

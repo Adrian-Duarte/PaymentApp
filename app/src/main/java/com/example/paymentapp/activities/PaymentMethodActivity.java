@@ -82,10 +82,12 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
+                    showGenericError();
                     return;
                 }
                 paymentMethods = response.body();
-                if(paymentMethods ==null) {
+                if(paymentMethods==null) {
+                    showGenericError();
                     return;
                 }
 
@@ -96,6 +98,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
             public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                showGenericError();
             }
         });
     }

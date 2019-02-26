@@ -92,14 +92,17 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
+                    showGenericError();
                     return;
                 }
                 List<Installment> installments = response.body();
-                if(installments ==null) {
+                if(installments==null) {
+                    showGenericError();
                     return;
                 }
                 payerCosts = installments.get(0).getPayerCosts();
                 if(payerCosts==null) {
+                    showGenericError();
                     return;
                 }
 
@@ -110,6 +113,7 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
             public void onFailure(Call<List<Installment>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                showGenericError();
             }
         });
     }

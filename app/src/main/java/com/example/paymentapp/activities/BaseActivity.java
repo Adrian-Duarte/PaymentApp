@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.paymentapp.R;
 
@@ -44,6 +45,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // Protected methods
+    protected void showGenericError() {
+        Toast.makeText(this, getString(R.string.all_generic_error), Toast.LENGTH_SHORT).show();
     }
 
 }
