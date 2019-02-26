@@ -26,7 +26,6 @@ public class AmountActivity extends BaseActivity {
 
     // Attributes
     private EditText etAmount;
-    private User user;
 
     // Override methods and callbacks
     @Override
@@ -53,7 +52,7 @@ public class AmountActivity extends BaseActivity {
 
     // Private methods
     private void initialize() {
-        user = new TinyDB(this).getPayment().getUser();
+        User user = new TinyDB(this).getPayment().getUser();
         etAmount = findViewById(R.id.et_amount);
         etAmount.requestFocus();
         etAmount.setHint(CurrencyUtils.formatCurrency(0));
@@ -85,13 +84,17 @@ public class AmountActivity extends BaseActivity {
         }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!s.toString().isEmpty()) {
-                etAmount.removeTextChangedListener(this);
-                String formatted = CurrencyUtils.formatCurrency(s);
-                etAmount.setText(formatted);
-                etAmount.setSelection(formatted.length());
-                etAmount.addTextChangedListener(this);
-            }
+            // Update edit text
+            etAmount.removeTextChangedListener(this);
+            String formatted = CurrencyUtils.formatCurrency(s);
+            etAmount.setText(formatted);
+            etAmount.setSelection(formatted.length());
+            etAmount.addTextChangedListener(this);
+
+            // Update button state
+            String onlyNumber = s.toString().replaceAll("[^0-9]", "");
+            if(!onlyNumber.equals("0") && !onlyNumber.equals("00"))
+                findViewById(R.id.btn_continue).setEnabled(!formatted.isEmpty());
         }
         @Override
         public void afterTextChanged(Editable s) {
