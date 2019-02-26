@@ -23,8 +23,8 @@ public class BankRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     // Constants
-    private final int BODY_VIEW = 0;
-    private final int EMPTY_VIEW = 2;
+    public static final int BODY_VIEW = 0;
+    public static final int EMPTY_VIEW = 1;
 
     // Attributes
     private Context context;

@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.paymentapp.R;
@@ -34,6 +33,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     private APIInterface apiInterface;
     private CustomProgressBar customProgressBar;
     private List<PaymentMethod> paymentMethods;
+    private PaymentMethodRecyclerViewAdapter paymentMethodRecyclerViewAdapter;
     private RecyclerView rvPaymentMethods;
 
     // Override methods and callbacks
@@ -104,13 +104,24 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
         apiInterface = APIClient.getMercadoPagoClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
         rvPaymentMethods = findViewById(R.id.rv_payment_methods);
-        rvPaymentMethods.setLayoutManager(new LinearLayoutManager(this));
-        rvPaymentMethods.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (paymentMethodRecyclerViewAdapter.getItemViewType(position)) {
+                    case PaymentMethodRecyclerViewAdapter.BODY_VIEW:
+                        return 1;
+                    default:
+                        return 3;
+                }
+            }
+        });
+        rvPaymentMethods.setLayoutManager(gridLayoutManager);
         rvPaymentMethods.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void updatePaymentMethods() {
-        PaymentMethodRecyclerViewAdapter paymentMethodRecyclerViewAdapter = new PaymentMethodRecyclerViewAdapter(this, paymentMethods);
+        paymentMethodRecyclerViewAdapter = new PaymentMethodRecyclerViewAdapter(this, paymentMethods);
         rvPaymentMethods.setAdapter(paymentMethodRecyclerViewAdapter);
     }
 

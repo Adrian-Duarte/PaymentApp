@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.paymentapp.R;
@@ -37,6 +36,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
 
     // Attributes
     private APIInterface apiInterface;
+    private BankRecyclerViewAdapter bankRecyclerViewAdapter;
     private CustomProgressBar customProgressBar;
     private List<Bank> banks;
     private String paymentMethodId;
@@ -117,13 +117,24 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
         apiInterface = APIClient.getMercadoPagoClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
         rvBanks = findViewById(R.id.rv_banks);
-        rvBanks.setLayoutManager(new LinearLayoutManager(this));
-        rvBanks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (bankRecyclerViewAdapter.getItemViewType(position)) {
+                    case BankRecyclerViewAdapter.BODY_VIEW:
+                        return 1;
+                    default:
+                        return 2;
+                }
+            }
+        });
+        rvBanks.setLayoutManager(gridLayoutManager);
         rvBanks.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void updateBanks() {
-        BankRecyclerViewAdapter bankRecyclerViewAdapter = new BankRecyclerViewAdapter(this, banks);
+        bankRecyclerViewAdapter = new BankRecyclerViewAdapter(this, banks);
         rvBanks.setAdapter(bankRecyclerViewAdapter);
     }
 

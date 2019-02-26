@@ -83,4 +83,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Small -->
+    <style name="NormalSmall">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="NormalSmall.Black">
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
 </resources>
