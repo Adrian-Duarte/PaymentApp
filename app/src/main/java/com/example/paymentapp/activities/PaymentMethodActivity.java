@@ -18,6 +18,7 @@ import com.example.paymentapp.models.PaymentMethod;
 import com.example.paymentapp.utils.CustomProgressBar;
 import com.example.paymentapp.utils.TinyDB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,6 +30,9 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     public static Intent getStartIntent(Context context) {
         return new Intent(context, PaymentMethodActivity.class);
     }
+
+    // Constants
+    private static final String DESIRED_PAYMENT_TYPE_ID = "credit_card";
 
     // Attributes
     private APIInterface apiInterface;
@@ -92,6 +96,14 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
                 if(paymentMethods==null) {
                     showGenericError();
                     return;
+                }
+
+                // Get only credit card types
+                Iterator<PaymentMethod> iterator = paymentMethods.iterator();
+                while (iterator.hasNext()) {
+                    PaymentMethod paymentMethod = iterator.next();
+                    if(!paymentMethod.getPaymentTypeId().equals(DESIRED_PAYMENT_TYPE_ID))
+                        iterator.remove();
                 }
 
                 // Success

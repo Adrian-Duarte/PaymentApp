@@ -9,6 +9,8 @@ public class PaymentMethod {
     private String id;
     @SerializedName("name")
     private String name;
+    @SerializedName("payment_type_id")
+    private String paymentTypeId;
     @SerializedName("secure_thumbnail")
     private String secureThumbnail;
 
@@ -18,6 +20,9 @@ public class PaymentMethod {
     }
     public String getName() {
         return name;
+    }
+    public String getPaymentTypeId() {
+        return paymentTypeId;
     }
     public String getSecureThumbnail() {
         return secureThumbnail;
