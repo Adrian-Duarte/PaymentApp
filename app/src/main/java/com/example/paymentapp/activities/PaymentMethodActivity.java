@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,12 +36,14 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     private List<PaymentMethod> paymentMethods;
     private PaymentMethodRecyclerViewAdapter paymentMethodRecyclerViewAdapter;
     private RecyclerView rvPaymentMethods;
+    private SwipeRefreshLayout srlPaymentMethods;
 
     // Override methods and callbacks
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize();
+        setListeners();
         getPaymentMethods();
     }
 
@@ -73,12 +76,12 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
 
     // Private methods
     private void getPaymentMethods() {
-        customProgressBar.show();
         Call<List<PaymentMethod>> call = apiInterface.getPaymentMethods(APIClient.PUBLIC_KEY);
         call.enqueue(new Callback<List<PaymentMethod>>() {
             @Override
             public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
                 customProgressBar.hide();
+                srlPaymentMethods.setRefreshing(false);
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
@@ -98,6 +101,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
             public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                srlPaymentMethods.setRefreshing(false);
                 showGenericError();
             }
         });
@@ -106,6 +110,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
     private void initialize() {
         apiInterface = APIClient.getMercadoPagoClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
+        customProgressBar.show();
         rvPaymentMethods = findViewById(R.id.rv_payment_methods);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -121,11 +126,24 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
         });
         rvPaymentMethods.setLayoutManager(gridLayoutManager);
         rvPaymentMethods.setItemAnimator(new DefaultItemAnimator());
+        srlPaymentMethods = findViewById(R.id.srl_payment_methods);
+    }
+
+    private void setListeners() {
+        srlPaymentMethods.setOnRefreshListener(onRefreshListener);
     }
 
     private void updatePaymentMethods() {
         paymentMethodRecyclerViewAdapter = new PaymentMethodRecyclerViewAdapter(this, paymentMethods);
         rvPaymentMethods.setAdapter(paymentMethodRecyclerViewAdapter);
     }
+
+    // Private methods
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getPaymentMethods();
+        }
+    };
 
 }
