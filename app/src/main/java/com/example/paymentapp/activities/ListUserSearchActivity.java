@@ -3,6 +3,7 @@ package com.example.paymentapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,12 +40,14 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
     private List<User> users;
     private RecyclerView rvUsers;
     private UserRecyclerViewAdapter recyclerViewAdapter;
+    private SwipeRefreshLayout srlUsers;
 
     // Override methods and callbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize();
+        setListeners();
         getUsers();
     }
 
@@ -86,15 +89,15 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
 
     // Private methods
     private void getUsers() {
-        customProgressBar.show();
         Call<UserData> call = apiInterface.getUsers(PER_PAGE);
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 customProgressBar.hide();
+                srlUsers.setRefreshing(false);
 
                 // Check if data is correct
-                if(response.isSuccessful()) {
+                if(!response.isSuccessful()) {
                     showGenericError();
                     return;
                 }
@@ -104,7 +107,7 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
                     return;
                 }
                 users = userData.getUsers();
-                if(users ==null) {
+                if(users==null) {
                     showGenericError();
                     return;
                 }
@@ -115,6 +118,7 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
             public void onFailure(Call<UserData> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                srlUsers.setRefreshing(false);
                 showGenericError();
             }
         });
@@ -123,15 +127,29 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
     private void initialize() {
         apiInterface = APIClient.getMockClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
+        customProgressBar.show();
         rvUsers = findViewById(R.id.rv_users);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         rvUsers.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvUsers.setItemAnimator(new DefaultItemAnimator());
+        srlUsers = findViewById(R.id.srl_users);
+    }
+
+    private void setListeners() {
+        srlUsers.setOnRefreshListener(onRefreshListener);
     }
 
     private void updateUsers() {
         recyclerViewAdapter = new UserRecyclerViewAdapter(this, users);
         rvUsers.setAdapter(recyclerViewAdapter);
     }
+
+    // Private methods
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getUsers();
+        }
+    };
 
 }
