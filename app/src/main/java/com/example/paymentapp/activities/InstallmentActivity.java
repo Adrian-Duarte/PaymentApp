@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,12 +39,14 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
     private List<PayerCost> payerCosts = new ArrayList<>();
     private Payment payment;
     private RecyclerView rvInstallments;
+    private SwipeRefreshLayout srlInstallments;
 
     // Override methods and callbacks
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize();
+        setListeners();
         getInstallments();
     }
 
@@ -76,7 +79,6 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
 
     // Private methods
     private void getInstallments() {
-        customProgressBar.show();
         Call<List<Installment>> call =
             apiInterface.getInstallments
             (
@@ -90,6 +92,7 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
             @Override
             public void onResponse(Call<List<Installment>> call, Response<List<Installment>> response) {
                 customProgressBar.hide();
+                srlInstallments.setRefreshing(false);
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
@@ -117,6 +120,7 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
             public void onFailure(Call<List<Installment>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                srlInstallments.setRefreshing(false);
                 showGenericError();
             }
         });
@@ -125,16 +129,30 @@ public class InstallmentActivity extends BaseActivity implements PayerCostRecycl
     private void initialize() {
         apiInterface = APIClient.getMercadoPagoClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
+        customProgressBar.show();
         payment = new TinyDB(this).getPayment();
         rvInstallments = findViewById(R.id.rv_installments);
         rvInstallments.setLayoutManager(new LinearLayoutManager(this));
         rvInstallments.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvInstallments.setItemAnimator(new DefaultItemAnimator());
+        srlInstallments = findViewById(R.id.srl_installments);
+    }
+
+    private void setListeners() {
+        srlInstallments.setOnRefreshListener(onRefreshListener);
     }
 
     private void updateInstallments() {
         PayerCostRecyclerViewAdapter payerCostRecyclerViewAdapter = new PayerCostRecyclerViewAdapter(this, payerCosts);
         rvInstallments.setAdapter(payerCostRecyclerViewAdapter);
     }
+
+    // Private methods
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getInstallments();
+        }
+    };
 
 }
