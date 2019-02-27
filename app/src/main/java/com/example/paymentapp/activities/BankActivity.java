@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
     private List<Bank> banks;
     private String paymentMethodId;
     private RecyclerView rvBanks;
+    private SwipeRefreshLayout srlBanks;
 
     // Override methods and callbacks
     @Override
@@ -48,6 +50,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
         super.onCreate(savedInstanceState);
         getExtras();
         initialize();
+        setListeners();
         getBanks();
     }
 
@@ -80,12 +83,12 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
 
     // Private methods
     private void getBanks() {
-        customProgressBar.show();
         Call<List<Bank>> call = apiInterface.getBanks(APIClient.PUBLIC_KEY, paymentMethodId);
         call.enqueue(new Callback<List<Bank>>() {
             @Override
             public void onResponse(Call<List<Bank>> call, Response<List<Bank>> response) {
                 customProgressBar.hide();
+                srlBanks.setRefreshing(false);
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {
@@ -105,6 +108,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
             public void onFailure(Call<List<Bank>> call, Throwable t) {
                 call.cancel();
                 customProgressBar.hide();
+                srlBanks.setRefreshing(false);
                 showGenericError();
             }
         });
@@ -119,6 +123,7 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
     private void initialize() {
         apiInterface = APIClient.getMercadoPagoClient().create(APIInterface.class);
         customProgressBar = new CustomProgressBar(this);
+        customProgressBar.show();
         rvBanks = findViewById(R.id.rv_banks);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -134,11 +139,24 @@ public class BankActivity extends BaseActivity implements BankRecyclerViewAdapte
         });
         rvBanks.setLayoutManager(gridLayoutManager);
         rvBanks.setItemAnimator(new DefaultItemAnimator());
+        srlBanks = findViewById(R.id.srl_banks);
+    }
+
+    private void setListeners() {
+        srlBanks.setOnRefreshListener(onRefreshListener);
     }
 
     private void updateBanks() {
         bankRecyclerViewAdapter = new BankRecyclerViewAdapter(this, banks);
         rvBanks.setAdapter(bankRecyclerViewAdapter);
     }
+
+    // Private methods
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getBanks();
+        }
+    };
 
 }
