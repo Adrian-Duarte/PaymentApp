@@ -95,6 +95,7 @@ public class ListUserSearchActivity extends BaseSearchActivity  implements UserR
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 customProgressBar.hide();
                 srlUsers.setRefreshing(false);
+                resetSearchView();
 
                 // Check if data is correct
                 if(!response.isSuccessful()) {

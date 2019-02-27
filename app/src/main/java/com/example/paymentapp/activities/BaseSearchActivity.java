@@ -54,16 +54,20 @@ public abstract class BaseSearchActivity extends BaseActivity {
         return true;
     }
 
+    // Protected methods
+    protected void resetSearchView() {
+        EditText et = findViewById(R.id.search_src_text);
+        et.setText("");
+        searchView.setQuery("", false);
+        searchView.onActionViewCollapsed();
+        searchView.clearFocus();
+    }
+
     // Listeners
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // Clear query and collapsed search view
-            EditText et = findViewById(R.id.search_src_text);
-            et.setText("");
-            searchView.setQuery("", false);
-            searchView.onActionViewCollapsed();
-            searchView.clearFocus();
+            resetSearchView();
             onClickCloseButton();
         }
     };
